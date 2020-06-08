@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dane</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div class="container mt-4" id="app">
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Imię</th>
+		  <th scope="col">Nazwisko</th>
+		  <th scope="col">Wiek</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="osoba, index in dane">
+          <td>{{ osoba.imie }}</td>
+		  <td>{{ osoba.nazwisko }}</td>
+		  <td>{{ osoba.wiek }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        dane: []
+      },
+      mounted: function() {
+        axios.get('http://localhost/cgi-bin/vec.cgi')
+            .then(response => {
+              this.dane = response.data;
+              console.log(response);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+      }
+    })
+  </script>
+</body>
+</html>
